@@ -24,7 +24,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 // @ApiBearerAuth()
 @ApiTags('users')
-@Controller('users')
+@Controller('/api/users')
 export class UsersController {
    constructor(private userService: UsersService) {}
 
@@ -40,7 +40,7 @@ export class UsersController {
       return this.userService.findAll();
    }
    @UseGuards(JwtAuthGuard)
-   @Post('/create')
+   @Post()
    @HttpCode(common.API_CODE_STATUS.CREATED)
    @UsePipes(ValidationPipe)
    create(@Body() CreateUserDto: CreateUserDto) {
@@ -57,6 +57,10 @@ export class UsersController {
    @Delete(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    remove(@Param('id') id: string) {
-      return this.userService.remove(+id);
+      this.userService.remove(+id);
+      return {
+         isSuccess: true,
+         messsage: 'ok',
+      };
    }
 }

@@ -7,13 +7,14 @@ import { AuthService } from './auth.service';
 import { jwtConstants } from './constant/constants';
 import { LocalStrategy } from './strategies/local.strategy';
 import { AuthController } from './auth.controller';
+import { CategoriesModule } from '../categories/categories.module';
 
 const jwtModule = JwtModule.register({
    secret: jwtConstants.secret,
    signOptions: { expiresIn: '1d' },
 });
 @Module({
-   imports: [UsersModule, PassportModule, jwtModule],
+   imports: [UsersModule, PassportModule, jwtModule, CategoriesModule],
    providers: [AuthService, JwtStrategy, LocalStrategy],
    exports: [AuthService, JwtModule],
    controllers: [AuthController],
