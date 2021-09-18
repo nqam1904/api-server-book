@@ -10,14 +10,14 @@ import {
    Put,
    UseGuards,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { common } from '../constant/CommonStatus';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-
+@ApiBearerAuth('access_token')
 @ApiTags('categories')
 @Controller('/api/categories')
 export class CategoriesController {

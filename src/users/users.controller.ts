@@ -22,12 +22,11 @@ import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagg
 import { Users } from './entities/users.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-// @ApiBearerAuth()
+@ApiBearerAuth('access-token')
 @ApiTags('users')
 @Controller('/api/users')
 export class UsersController {
    constructor(private userService: UsersService) {}
-
    @Get()
    @ApiResponse({
       status: 200,
@@ -39,6 +38,7 @@ export class UsersController {
    findAll() {
       return this.userService.findAll();
    }
+
    @UseGuards(JwtAuthGuard)
    @Post()
    @HttpCode(common.API_CODE_STATUS.CREATED)
@@ -46,6 +46,7 @@ export class UsersController {
    create(@Body() CreateUserDto: CreateUserDto) {
       return this.userService.create(CreateUserDto);
    }
+   
    @UseGuards(JwtAuthGuard)
    @Put(':id')
    @HttpCode(common.API_CODE_STATUS.OK)

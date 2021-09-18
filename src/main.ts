@@ -8,7 +8,9 @@ async function bootstrap() {
       .setDescription('The Books API')
       .setVersion('1.0')
       .addTag('books')
+      .addBearerAuth({ type: 'http', scheme: 'Bearer', bearerFormat: 'JWT' }, 'access-token')
       .build();
+
    const document = SwaggerModule.createDocument(app, config);
    SwaggerModule.setup('api', app, document);
    await app.listen(8080);

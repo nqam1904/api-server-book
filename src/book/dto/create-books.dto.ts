@@ -2,10 +2,10 @@
 
 import { IsNotEmpty, Length } from 'class-validator';
 
-export class CreateUserDto {
-   @IsNotEmpty({ message: 'Email is not empty' })
+export class CreateBooksDto {
+   @IsNotEmpty({ message: 'Ttile is not empty' })
    title: string;
 
-   @IsNotEmpty({ message: 'Email is not empty' })
+   @IsNotEmpty({ message: 'Author is not empty' })
    author: string;
 }
