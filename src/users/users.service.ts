@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +24,9 @@ export class UsersService {
    }
 
    async findAll(): Promise<Users[]> {
-      return await this.usersRepository.find();
+      const user = await this.usersRepository.find();
+      const data = _.map(user, (e) => _.omit(e, ['password']));
+      return data;
    }
 
    findByEmail(email: string): Promise<Users> {

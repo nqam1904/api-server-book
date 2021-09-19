@@ -25,7 +25,7 @@ export class AuthService {
       const payload = await this.validateUser(user.email, user.password);
       try {
          return {
-            is_success: true,
+            isSuccess: true,
             data: payload,
             access_token: this.jwtService.sign(payload),
          };

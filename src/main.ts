@@ -1,6 +1,9 @@
+import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { join } from 'path';
+
 async function bootstrap() {
    const app = await NestFactory.create(AppModule);
    const config = new DocumentBuilder()
@@ -13,7 +16,7 @@ async function bootstrap() {
 
    const document = SwaggerModule.createDocument(app, config);
    SwaggerModule.setup('api', app, document);
-
+   app.use('/', express.static(join(__dirname, '..', 'uploads')));
    await app.listen(8080);
 }
 bootstrap();

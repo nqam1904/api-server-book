@@ -13,6 +13,6 @@ export const common = {
    AUTHENTICATION: {
       JWT: process.env.JWT,
       BEARER: process.env.BEARER,
-      AUTHORIZATION: process.env.BEARER,
+      AUTHORIZATION: process.env.AUTHORIZATION,
    },
 };
