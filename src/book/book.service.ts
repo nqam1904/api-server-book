@@ -15,7 +15,8 @@ export class BookService {
       const books = new Books();
       books.title = createBooksDto.title;
       books.author = createBooksDto.author;
-
+      // books.images = createBooksDto.imagesId;
+      // books.categories = createBooksDto.categories;
       return this.booksRepository.save(books);
    }
    findAll(): Promise<Books[]> {

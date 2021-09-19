@@ -9,6 +9,8 @@ import {
    Post,
    Put,
    UseGuards,
+   UsePipes,
+   ValidationPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -24,6 +26,7 @@ export class BookController {
    constructor(private bookService: BookService) {}
 
    @UseGuards(JwtAuthGuard)
+   @UsePipes(ValidationPipe)
    @Post()
    async create(@Body() createBooksDto: CreateBooksDto) {
       return await this.bookService.create(createBooksDto);
@@ -49,6 +52,7 @@ export class BookController {
    }
 
    @UseGuards(JwtAuthGuard)
+   @UsePipes(ValidationPipe)
    @Put(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    update(@Param('id') id: string, @Body() updateBooksDto: UpdateBooksDto) {

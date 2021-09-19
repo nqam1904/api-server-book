@@ -6,6 +6,10 @@ export class UpdateBooksDto extends PartialType(CreateBooksDto) {
    @IsNotEmpty({ message: 'Title is not empty' })
    title: string;
 
+   image: string;
+
+   pdf: string;
+
    @IsNotEmpty({ message: 'author is not empty' })
    author: string;
 }
