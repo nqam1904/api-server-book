@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Books } from './entities/books.entity';
 import { UpdateBooksDto } from './dto/update-books.dto';
+import merge from '../shared/merge';
 
 @Injectable()
 export class BookService {
@@ -12,11 +13,9 @@ export class BookService {
       private readonly booksRepository: Repository<Books>,
    ) {}
    async create(createBooksDto: CreateBooksDto): Promise<Books> {
-      const books = new Books();
+      const books = merge(new Books(), createBooksDto);
       books.title = createBooksDto.title;
       books.author = createBooksDto.author;
-      // books.images = createBooksDto.imagesId;
-      // books.categories = createBooksDto.categories;
       return this.booksRepository.save(books);
    }
    findAll(): Promise<Books[]> {

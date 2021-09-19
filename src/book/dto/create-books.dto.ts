@@ -8,7 +8,7 @@ export class CreateBooksDto {
    @IsNotEmpty({ message: 'Ttile is not empty' })
    title: string;
 
-   imagesId: number;
+   imagesId: number[];
 
    images: Media[];
 
