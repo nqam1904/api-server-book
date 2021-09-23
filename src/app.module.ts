@@ -10,12 +10,21 @@ import { BookModule } from './book/book.module';
 import { CategoriesModule } from './categories/categories.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { MediaModule } from './media/media.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
    imports: [
+      ServeStaticModule.forRoot({
+         rootPath: join(__dirname, '..'),
+      }),
       TypeOrmModule.forRoot(typeOrmConfig),
       MulterModule.register({
          dest: '../uploads',
+      }),
+      ConfigModule.forRoot({
+         isGlobal: true,
       }),
       UsersModule,
       AuthModule,
