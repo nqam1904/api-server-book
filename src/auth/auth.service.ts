@@ -1,5 +1,5 @@
 import { UsersService } from '../users/users.service';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import * as _ from 'lodash';
@@ -18,7 +18,7 @@ export class AuthService {
          const { ...result } = _.omit(user, ['password']);
          return result;
       }
-      return null;
+      throw new HttpException('Email or password invalid', HttpStatus.BAD_REQUEST);
    }
 
    async login(user: any) {
@@ -29,8 +29,9 @@ export class AuthService {
             data: payload,
             access_token: this.jwtService.sign(payload),
          };
-      } catch (Error) {
-         console.log(Error);
+      } catch (e) {
+         console.log(e);
+         throw new HttpException('Email or password invalid', HttpStatus.BAD_REQUEST);
       }
    }
 }

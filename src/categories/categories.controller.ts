@@ -34,14 +34,12 @@ export class CategoriesController {
       description: 'Get list category success!',
       type: Category,
    })
-   @UseGuards(JwtAuthGuard)
    @Get()
    @HttpCode(common.API_CODE_STATUS.OK)
    findAll() {
       return this.categoriesService.findAll();
    }
 
-   @UseGuards(JwtAuthGuard)
    @Get(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    findOne(@Param('id') id: string) {

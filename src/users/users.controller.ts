@@ -6,7 +6,6 @@ import {
    Delete,
    Get,
    HttpCode,
-   HttpException,
    Param,
    Post,
    Put,
@@ -27,27 +26,37 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @Controller('/api/users')
 export class UsersController {
    constructor(private userService: UsersService) {}
+
    @Get()
    @ApiResponse({
       status: 200,
       description: 'Get list users success!',
       type: Users,
    })
-   @UseGuards(JwtAuthGuard)
    @HttpCode(common.API_CODE_STATUS.OK)
    findAll() {
       return this.userService.findAll();
    }
 
-   @UseGuards(JwtAuthGuard)
+   @HttpCode(common.API_CODE_STATUS.OK)
+   @Get(':id')
+   findOne(@Param(':id') id: number) {
+      return this.userService.findOne(id);
+   }
+
+   @Post('/findEmail')
+   @HttpCode(common.API_CODE_STATUS.OK)
+   findEmail(@Body() email: string) {
+      return this.userService.findByEmail(email);
+   }
+
    @Post()
    @HttpCode(common.API_CODE_STATUS.CREATED)
    @UsePipes(ValidationPipe)
    create(@Body() CreateUserDto: CreateUserDto) {
       return this.userService.create(CreateUserDto);
    }
-   
-   @UseGuards(JwtAuthGuard)
+
    @Put(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -58,10 +67,6 @@ export class UsersController {
    @Delete(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    remove(@Param('id') id: string) {
-      this.userService.remove(+id);
-      return {
-         isSuccess: true,
-         messsage: 'ok',
-      };
+      return this.userService.remove(+id);
    }
 }

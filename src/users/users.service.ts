@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,11 +16,20 @@ export class UsersService {
    ) {}
 
    async create(createUserDto: CreateUserDto) {
-      const password = await bcrypt.hash(createUserDto.password, 10);
-      const user = (new Users(), { ...createUserDto, password });
-      const res = await this.usersRepository.save(user);
-      res.password = '';
-      return res;
+      try {
+         const email = await this.usersRepository.findOne({ email: createUserDto.email });
+         if (!email) {
+            const password = await bcrypt.hash(createUserDto.password, 10);
+            const user = (new Users(), { ...createUserDto, password });
+            const res = await this.usersRepository.save(user);
+            delete res.password;
+            return res;
+         } else {
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+         }
+      } catch (e) {
+         throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+      }
    }
 
    async findAll(): Promise<Users[]> {
@@ -29,21 +38,42 @@ export class UsersService {
       return data;
    }
 
-   findByEmail(email: string): Promise<Users> {
-      return this.usersRepository.findOne({
-         email,
-      });
+   async findByEmail(email: string): Promise<any> {
+      try {
+         const dataEmail = await this.usersRepository.findOne({ email: email });
+         if (!_.isEmpty(dataEmail)) {
+            return dataEmail;
+         } else {
+            throw new HttpException('Email not found', HttpStatus.BAD_REQUEST);
+         }
+      } catch (e) {
+         throw new HttpException('Email not found', HttpStatus.BAD_REQUEST);
+      }
    }
 
    findOne(id: number): Promise<Users> {
       return this.usersRepository.findOne(id);
    }
 
-   update(id: number, updateUserDto: UpdateUserDto): Promise<Users> {
-      return this.usersRepository.save({
-         id,
-         ...updateUserDto,
-      });
+   async update(id: number, updateUserDto: UpdateUserDto): Promise<Users> {
+      try {
+         const email = await this.usersRepository.findOne({ email: updateUserDto.email });
+         if (!email) {
+            return this.usersRepository.save({
+               id,
+               ...updateUserDto,
+            });
+         } else if (email) {
+            return this.usersRepository.save({
+               id,
+               ...updateUserDto,
+            });
+         } else {
+            throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+         }
+      } catch (e) {
+         throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+      }
    }
 
    async remove(id: number): Promise<any> {
@@ -51,10 +81,12 @@ export class UsersService {
          const idUser = await this.usersRepository.findOne(id);
          if (idUser) {
             await this.usersRepository.delete(id);
-            return { message: 'ok' };
+            return { isSuccess: true, messsage: 'ok' };
          } else {
-            return { message: 'Not found id' };
+            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST);
          }
-      } catch (error) {}
+      } catch (error) {
+         throw new HttpException('Id not found', HttpStatus.BAD_REQUEST);
+      }
    }
 }

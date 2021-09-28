@@ -21,7 +21,6 @@ import { common } from '../constant/CommonStatus';
 export class MediaController {
    constructor(private readonly mediaService: MediaService) {}
 
-   @UseGuards(JwtAuthGuard)
    @HttpCode(common.API_CODE_STATUS.CREATED)
    @Post()
    @UseInterceptors(FilesInterceptor('files'))
@@ -36,7 +35,6 @@ export class MediaController {
          throw new Error('Upload files faild!');
       }
    }
-   @UseGuards(JwtAuthGuard)
    @HttpCode(common.API_CODE_STATUS.OK)
    @Get()
    findAll() {
