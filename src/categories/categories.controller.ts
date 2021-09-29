@@ -23,7 +23,6 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 export class CategoriesController {
    constructor(private categoriesService: CategoriesService) {}
 
-   @UseGuards(JwtAuthGuard)
    @Post()
    async create(@Body() createCategoryDto: CreateCategoryDto) {
       return await this.categoriesService.create(createCategoryDto);
