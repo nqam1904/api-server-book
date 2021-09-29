@@ -45,14 +45,14 @@ export class CategoriesController {
       return this.categoriesService.findOne(+id);
    }
 
-   @UseGuards(JwtAuthGuard)
+   // @UseGuards(JwtAuthGuard)
    @Put(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
       return this.categoriesService.update(+id, updateCategoryDto);
    }
 
-   @UseGuards(JwtAuthGuard)
+   // @UseGuards(JwtAuthGuard)
    @Delete(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    async remove(@Param('id') id: string) {
