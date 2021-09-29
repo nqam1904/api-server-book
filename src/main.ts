@@ -5,7 +5,7 @@ import * as express from 'express';
 import { join } from 'path';
 async function bootstrap() {
    const app = await NestFactory.create(AppModule, { cors: true });
-   app.use('/public', express.static(join(__dirname, '..', 'public')));
+   app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
    const config = new DocumentBuilder()
       .setTitle('Books for discord')
       .setDescription('The Books API')
