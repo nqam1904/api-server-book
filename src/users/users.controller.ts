@@ -63,7 +63,7 @@ export class UsersController {
       return this.userService.update(+id, updateUserDto);
    }
 
-   @UseGuards(JwtAuthGuard)
+   // @UseGuards(JwtAuthGuard)
    @Delete(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    remove(@Param('id') id: string) {
