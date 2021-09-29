@@ -31,7 +31,6 @@ export class BookController {
       private categoriesService: CategoriesService,
    ) {}
 
-   @UseGuards(JwtAuthGuard)
    @UsePipes(ValidationPipe)
    @Post()
    async create(@Body() createBooksDto: CreateBooksDto) {
@@ -65,7 +64,6 @@ export class BookController {
       return this.bookService.findAll();
    }
 
-   @UseGuards(JwtAuthGuard)
    @Get(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    findOne(@Param('id') id: string) {
