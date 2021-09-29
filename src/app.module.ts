@@ -16,10 +16,10 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
    imports: [
-      // ServeStaticModule.forRoot({
-      //    rootPath: join(__dirname, '..', 'uploads'),
-      //    exclude: ['/api*'],
-      // }),
+      ServeStaticModule.forRoot({
+         rootPath: join(__dirname, '..', 'uploads'),
+         exclude: ['/api*'],
+      }),
       // ServeStaticModule.forRoot({
       //    rootPath: join(__dirname, '..', '..', 'upload'),
       //    serveRoot: '/static',
