@@ -17,7 +17,8 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
    imports: [
       ServeStaticModule.forRoot({
-         rootPath: join(__dirname, '..'),
+         rootPath: join(__dirname, '..', 'public'),
+         exclude: ['/api*'],
       }),
       TypeOrmModule.forRoot(typeOrmConfig),
       MulterModule.register({
