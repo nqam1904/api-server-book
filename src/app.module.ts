@@ -17,7 +17,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
    imports: [
       ServeStaticModule.forRoot({
-         rootPath: join(__dirname, '..', 'public'),
+         rootPath: join(__dirname, '..', 'uploads'),
          exclude: ['/api*'],
       }),
       TypeOrmModule.forRoot(typeOrmConfig),
