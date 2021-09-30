@@ -21,7 +21,7 @@ import { UpdateBooksDto } from './dto/update-books.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { MediaService } from '../media/media.service';
 
-// @ApiBearerAuth('access_token')
+@ApiBearerAuth('access_token')
 @ApiTags('books')
 @Controller('/api/books')
 export class BookController {
