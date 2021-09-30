@@ -35,6 +35,6 @@ export class Media {
 
    @AfterRemove()
    removeFileOnDisk() {
-      unlinkSync(join(__dirname, '..', '..', '..', '..', 'uploads', this.key));
+      unlinkSync(join(__dirname, '..', '..', '..', 'uploads', this.key));
    }
 }

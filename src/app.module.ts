@@ -20,14 +20,6 @@ import { ConfigModule } from '@nestjs/config';
          rootPath: join(__dirname, '..', 'uploads'),
          exclude: ['/api*'],
       }),
-      // ServeStaticModule.forRoot({
-      //    rootPath: join(__dirname, '..', '..', 'upload'),
-      //    serveRoot: '/static',
-      // }),
-      // ServeStaticModule.forRoot({
-      //    rootPath: join(__dirname, '..', '..', 'static'),
-      //    serveRoot: '/cdn',
-      // }),
       TypeOrmModule.forRoot(typeOrmConfig),
       MulterModule.register({
          dest: '../uploads',
