@@ -42,6 +42,9 @@ export class Users {
    @Index()
    email: string = '';
 
+   @Column()
+   discordId: string;
+
    @Column({
       type: 'enum',
       enum: Role,

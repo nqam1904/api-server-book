@@ -25,4 +25,6 @@ export class CreateUserDto {
    email: string;
 
    role: Role;
+
+   discordId: string;
 }

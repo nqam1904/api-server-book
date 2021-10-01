@@ -1,5 +1,5 @@
 import { UsersService } from '../users/users.service';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import * as _ from 'lodash';
@@ -13,7 +13,6 @@ export class AuthService {
    async validateUser(email: string, password: string): Promise<any> {
       const user = await this.usersService.findByEmail(email);
       const isValid = await bcrypt.compare(password, user.password);
-     
 
       if (user && isValid) {
          const { ...result } = _.omit(user, ['password']);
@@ -33,5 +32,15 @@ export class AuthService {
       } catch (e) {
          throw new HttpException('Email or password invalid', HttpStatus.BAD_REQUEST);
       }
+   }
+
+   async findUserFromDiscordId(discordId: string): Promise<any> {
+      const user = await this.usersService.findIdDiscord('discord_id', discordId);
+
+      if (!user) {
+         throw new UnauthorizedException();
+      }
+
+      return user;
    }
 }

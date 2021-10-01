@@ -55,6 +55,10 @@ export class UsersService {
       return this.usersRepository.findOne(id);
    }
 
+   async findIdDiscord(field: string, discordId: string): Promise<Users | undefined> {
+      return this.usersRepository.findOne({ discordId: discordId });
+   }
+
    async update(id: number, updateUserDto: UpdateUserDto): Promise<Users> {
       try {
          const email = await this.usersRepository.findOne({ email: updateUserDto.email });
