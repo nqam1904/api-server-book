@@ -1,8 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { IsNotEmpty } from 'class-validator';
-import { CreateBooksDto } from './create-books.dto';
+import { CreateBlogDto } from './create-blog.dto';
 
-export class UpdateBooksDto extends PartialType(CreateBooksDto) {
+export class UpdateBlogDto extends PartialType(CreateBlogDto) {
    @IsNotEmpty({ message: 'Title is not empty' })
    title: string;
 

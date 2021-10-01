@@ -13,6 +13,7 @@ import { MediaModule } from './media/media.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
+import { BlogModule } from './blog/blog.module';
 
 @Module({
    imports: [
@@ -32,6 +33,7 @@ import { ConfigModule } from '@nestjs/config';
       BookModule,
       CategoriesModule,
       MediaModule,
+      BlogModule,
    ],
 
    controllers: [AppController],
