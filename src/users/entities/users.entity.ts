@@ -12,6 +12,10 @@ import {
    UpdateDateColumn,
 } from 'typeorm';
 
+export enum Role {
+   ADMIN = 'admin',
+   USER = 'user',
+}
 @Entity()
 export class Users {
    @PrimaryGeneratedColumn()
@@ -37,6 +41,13 @@ export class Users {
    @IsEmail()
    @Index()
    email: string = '';
+
+   @Column({
+      type: 'enum',
+      enum: Role,
+      default: Role.USER,
+   })
+   role: Role = Role.USER;
 
    @CreateDateColumn()
    createDate: Date;

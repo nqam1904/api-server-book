@@ -13,7 +13,6 @@ export class MediaService {
    ) {}
 
    async create(createMediaDto: CreateMediaDto): Promise<Media> {
-      console.log(createMediaDto, 'file');
       const media = new Media();
       media.key = createMediaDto.filename;
       media.name = createMediaDto.originalname;

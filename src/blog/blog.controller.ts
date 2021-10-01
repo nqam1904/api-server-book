@@ -7,6 +7,7 @@ import {
    Param,
    Post,
    Put,
+   Query,
    UseGuards,
    UsePipes,
    ValidationPipe,
@@ -71,10 +72,12 @@ export class BlogController {
       return this.blogService.findOne(+id);
    }
 
-   @HttpCode(common.API_CODE_STATUS.OK)
-   findTitle(@Param('title') title: string) {
-      return this.blogService.searchOne(title);
-   }
+   // @Get('?query')
+   // @HttpCode(common.API_CODE_STATUS.OK)
+   // searchOne(@Query() query: Record<string, any>) {
+   //    console.log(query);
+   //    return this.blogService.searchOne(query);
+   // }
 
    @UseGuards(JwtAuthGuard)
    @UsePipes(ValidationPipe)

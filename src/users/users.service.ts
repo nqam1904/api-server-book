@@ -39,7 +39,6 @@ export class UsersService {
    }
 
    async findByEmail(email: string): Promise<any> {
-      console.log(email, 'find by email');
       try {
          const dataEmail = await this.usersRepository.findOne({ email: email });
          if (!_.isEmpty(dataEmail)) {

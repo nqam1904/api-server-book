@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 export const common = {
    API_CODE_STATUS: {
-      OK: 200,
-      BAD_REQUEST: 400,
-      INTERNAL_SERVER: 500,
-      FORBIDDEN: 403,
-      CREATED: 201,
-      ACCEPTED: 202,
-      NOT_FOUND: 404,
-      UNAUTHORIZED: 401,
+      OK: +process.env.OK,
+      BAD_REQUEST: +process.env.BAD_REQUEST,
+      INTERNAL_SERVER: +process.env.INTERNAL_SERVER,
+      FORBIDDEN: +process.env.FORBIDDEN,
+      CREATED: +process.env.CREATED,
+      ACCEPTED: +process.env.ACCEPTED,
+      NOT_FOUND: +process.env.NOT_FOUND,
+      UNAUTHORIZED: +process.env.UNAUTHORIZED,
    },
    AUTHENTICATION: {
       JWT: process.env.JWT,

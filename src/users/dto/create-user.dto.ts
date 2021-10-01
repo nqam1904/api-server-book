@@ -2,6 +2,7 @@
 
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from '../entities/users.entity';
 
 export class CreateUserDto {
    @ApiProperty()
@@ -22,4 +23,6 @@ export class CreateUserDto {
    @IsNotEmpty({ message: 'Email is not empty' })
    @IsEmail()
    email: string;
+
+   role: Role;
 }

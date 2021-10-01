@@ -34,9 +34,10 @@ export class BlogService {
       return this.blogReponsitory.save({ id, ...updateBlogDto });
    }
 
-   searchOne(title: string): Promise<Blog> {
-      return this.blogReponsitory.findOne({ title });
-   }
+   // searchOne(query: string | any): Promise<Blog> {
+   //    console.log(query);
+   //    return this.blogReponsitory.query(query);
+   // }
 
    async remove(id: number): Promise<any> {
       try {

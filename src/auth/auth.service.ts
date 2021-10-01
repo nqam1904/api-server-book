@@ -31,7 +31,6 @@ export class AuthService {
             access_token: this.jwtService.sign(payload),
          };
       } catch (e) {
-         console.log(e);
          throw new HttpException('Email or password invalid', HttpStatus.BAD_REQUEST);
       }
    }
