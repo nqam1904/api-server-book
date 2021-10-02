@@ -25,10 +25,11 @@ export class UsersService {
             delete res.password;
             return res;
          } else {
-            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+            throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
          }
       } catch (e) {
-         throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+         console.log(e);
+         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
       }
    }
 
