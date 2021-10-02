@@ -28,13 +28,11 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
    }
 
    async validate(accessToken: string): Promise<any> {
-       
       const { data } = await this.http
          .get('https://discordapp.com/api/users/@me', {
             headers: { Authorization: `Bearer ${accessToken}` },
          })
          .toPromise();
-      console.log(data, 'authen');
-      return this.authService.findUserFromDiscordId(data.id);
+      return this.authService.findUserFromDiscordId(data.id, data);
    }
 }

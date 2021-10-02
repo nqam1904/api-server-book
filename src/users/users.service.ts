@@ -25,11 +25,11 @@ export class UsersService {
             delete res.password;
             return res;
          } else {
+            console.log('else');
             throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
          }
       } catch (e) {
-         console.log(e);
-         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+         throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
       }
    }
 
@@ -93,5 +93,15 @@ export class UsersService {
       } catch (error) {
          throw new HttpException('Id not found', HttpStatus.BAD_REQUEST);
       }
+   }
+   async createAccountDiscord(discordId: string, data: any): Promise<any> {
+      const newUser = new Users();
+      newUser.firstName = data.username.split(' ', 1).toString();
+      newUser.lastName = _.last(data.username.split(' '));
+      newUser.email = data.email;
+      newUser.discordId = discordId;
+      const res = await this.usersRepository.save(newUser);
+      const { ...response } = _.omit(res, ['password']);
+      return response;
    }
 }

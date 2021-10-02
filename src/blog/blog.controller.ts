@@ -72,12 +72,12 @@ export class BlogController {
       return this.blogService.findOne(+id);
    }
 
-   // @Get('?query')
-   // @HttpCode(common.API_CODE_STATUS.OK)
-   // searchOne(@Query() query: Record<string, any>) {
-   //    console.log(query);
-   //    return this.blogService.searchOne(query);
-   // }
+   @Get()
+   @HttpCode(common.API_CODE_STATUS.OK)
+   searchOne(@Query('title') title: string) {
+      console.log(title);
+      return this.blogService.searchOne(title);
+   }
 
    @UseGuards(JwtAuthGuard)
    @UsePipes(ValidationPipe)

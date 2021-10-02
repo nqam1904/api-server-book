@@ -34,13 +34,24 @@ export class AuthService {
       }
    }
 
-   async findUserFromDiscordId(discordId: string): Promise<any> {
+   async findUserFromDiscordId(discordId: string, data: any): Promise<any> {
       const user = await this.usersService.findIdDiscord('discord_id', discordId);
-
       if (!user) {
-         throw new UnauthorizedException();
+         const { ...userDiscord } = await this.usersService.createAccountDiscord(discordId, data);
+         return {
+            isSuccess: true,
+            type: 'DISCORD',
+            data: userDiscord,
+            access_token: this.jwtService.sign(userDiscord),
+         };
+      } else {
+         const { ...discord } = _.omit(user, ['password']);
+         return {
+            isSuccess: true,
+            type: 'DISCORD',
+            data: discord,
+            access_token: this.jwtService.sign(discord),
+         };
       }
-
-      return user;
    }
 }

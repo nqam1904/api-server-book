@@ -34,10 +34,10 @@ export class BlogService {
       return this.blogReponsitory.save({ id, ...updateBlogDto });
    }
 
-   // searchOne(query: string | any): Promise<Blog> {
-   //    console.log(query);
-   //    return this.blogReponsitory.query(query);
-   // }
+   searchOne(title: string): Promise<Blog> {
+      console.log(title);
+      return this.blogReponsitory.findOne({ title: title });
+   }
 
    async remove(id: number): Promise<any> {
       try {
