@@ -24,7 +24,9 @@ export class CreateUserDto {
    @IsEmail()
    email: string;
 
+   @ApiProperty()
    role: Role;
 
+   @ApiProperty()
    discordId: string;
 }
