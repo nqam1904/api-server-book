@@ -21,15 +21,16 @@ export class UsersService {
          if (!email) {
             const password = await bcrypt.hash(createUserDto.password, 10);
             const user = (new Users(), { ...createUserDto, password });
+            user.discordId = '';
             const res = await this.usersRepository.save(user);
             delete res.password;
             return res;
          } else {
-            console.log('else');
             throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
          }
       } catch (e) {
-         throw new HttpException('Email already exists!', HttpStatus.BAD_REQUEST);
+         console.log(e);
+         throw new HttpException(e, HttpStatus.BAD_REQUEST);
       }
    }
 

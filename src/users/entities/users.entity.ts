@@ -43,7 +43,7 @@ export class Users {
    email: string = '';
 
    @Column()
-   discordId: string;
+   discordId: string = '';
 
    @Column({
       type: 'enum',
