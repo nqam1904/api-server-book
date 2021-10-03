@@ -18,7 +18,7 @@ export class CategoriesService {
       return this.categoriesRepository.save(category);
    }
    findAll(): Promise<Category[]> {
-      return this.categoriesRepository.find();
+      return this.categoriesRepository.find({ order: { id: 'DESC' } });
    }
 
    findOne(id: number): Promise<Category> {

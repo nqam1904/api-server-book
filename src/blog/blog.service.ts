@@ -23,7 +23,7 @@ export class BlogService {
    }
 
    findAll(): Promise<Blog[]> {
-      return this.blogReponsitory.find();
+      return this.blogReponsitory.find({ order: { id: 'DESC' } });
    }
 
    findOne(id: number): Promise<Blog> {

@@ -35,7 +35,7 @@ export class UsersService {
    }
 
    async findAll(): Promise<Users[]> {
-      const user = await this.usersRepository.find();
+      const user = await this.usersRepository.find({ order: { id: 'DESC' } });
       const data = _.map(user, (e) => _.omit(e, ['password']));
       return data;
    }

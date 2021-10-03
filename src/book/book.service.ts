@@ -19,7 +19,7 @@ export class BookService {
       return this.booksRepository.save(books);
    }
    findAll(): Promise<Books[]> {
-      return this.booksRepository.find();
+      return this.booksRepository.find({ order: { id: 'DESC' } });
    }
 
    findOne(id: number): Promise<Books> {
