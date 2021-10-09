@@ -1,3 +1,4 @@
+import { MediaService } from './../media/media.service';
 /* eslint-disable prettier/prettier */
 import {
    Body,
@@ -21,11 +22,22 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @ApiTags('categories')
 @Controller('/api/categories')
 export class CategoriesController {
-   constructor(private categoriesService: CategoriesService) {}
+   constructor(private categoriesService: CategoriesService, private mediaService: MediaService) {}
 
    @Post()
    async create(@Body() createCategoryDto: CreateCategoryDto) {
-      return await this.categoriesService.create(createCategoryDto);
+      const images = await Promise.all(
+         createCategoryDto.imagesId?.map(async (x) => {
+            const imageID = await this.mediaService.findOne(x);
+            return imageID;
+         }),
+      );
+      createCategoryDto.images = images;
+      const data = await this.categoriesService.create(createCategoryDto);
+      return {
+         isSuccess: true,
+         data: data,
+      };
    }
 
    @ApiResponse({

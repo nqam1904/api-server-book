@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { Books } from './entities/books.entity';
 import { UpdateBooksDto } from './dto/update-books.dto';
 import merge from '../shared/merge';
-
+import * as paginate from 'nestjs-typeorm-paginate';
 @Injectable()
 export class BookService {
    constructor(
@@ -17,6 +17,9 @@ export class BookService {
       books.title = createBooksDto.title;
       books.author = createBooksDto.author;
       return this.booksRepository.save(books);
+   }
+   async paginate(options: paginate.IPaginationOptions): Promise<paginate.Pagination<Books>> {
+      return paginate.paginate<Books>(this.booksRepository, options);
    }
    findAll(): Promise<Books[]> {
       return this.booksRepository.find({ order: { id: 'DESC' } });

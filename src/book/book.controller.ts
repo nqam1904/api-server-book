@@ -2,12 +2,15 @@ import { CreateBooksDto } from './dto/create-books.dto';
 import {
    Body,
    Controller,
+   DefaultValuePipe,
    Delete,
    Get,
    HttpCode,
    Param,
+   ParseIntPipe,
    Post,
    Put,
+   Query,
    UseGuards,
    UsePipes,
    ValidationPipe,
@@ -20,6 +23,7 @@ import { Books } from './entities/books.entity';
 import { UpdateBooksDto } from './dto/update-books.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { MediaService } from '../media/media.service';
+import { Pagination } from 'nestjs-typeorm-paginate';
 
 @ApiBearerAuth('access_token')
 @ApiTags('books')
@@ -60,8 +64,18 @@ export class BookController {
    })
    @Get()
    @HttpCode(common.API_CODE_STATUS.OK)
-   findAll() {
-      return this.bookService.findAll();
+   // findAll() {
+   //    return this.bookService.findAll();
+   // }
+   findAll(
+      @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+      @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+   ): Promise<Pagination<Books>> {
+      limit = limit > 100 ? 100 : limit;
+      return this.bookService.paginate({
+         page,
+         limit,
+      });
    }
 
    @Get(':id')

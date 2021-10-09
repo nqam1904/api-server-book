@@ -1,10 +1,12 @@
 import {
    Body,
    Controller,
+   DefaultValuePipe,
    Delete,
    Get,
    HttpCode,
    Param,
+   ParseIntPipe,
    Post,
    Put,
    Query,
@@ -13,6 +15,7 @@ import {
    ValidationPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CategoriesService } from '../categories/categories.service';
 import { common } from '../constant/CommonStatus';
@@ -62,10 +65,19 @@ export class BlogController {
    })
    @Get()
    @HttpCode(common.API_CODE_STATUS.OK)
-   findAll() {
-      return this.blogService.findAll();
+   // findAll() {
+   //    return this.blogService.findAll();
+   // }
+   findAll(
+      @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+      @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+   ): Promise<Pagination<Blog>> {
+      limit = limit > 100 ? 100 : limit;
+      return this.blogService.paginate({
+         page,
+         limit,
+      });
    }
-
    @Get(':id')
    @HttpCode(common.API_CODE_STATUS.OK)
    findOne(@Param('id') id: string) {

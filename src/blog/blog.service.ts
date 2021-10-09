@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import merge from '../shared/merge';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { Blog } from './entities/blog.entity';
+import * as paginate from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class BlogService {
@@ -21,7 +22,9 @@ export class BlogService {
       blog.description = createBlog.description;
       return this.blogReponsitory.save(blog);
    }
-
+   async paginate(options: paginate.IPaginationOptions): Promise<paginate.Pagination<Blog>> {
+      return paginate.paginate<Blog>(this.blogReponsitory, options);
+   }
    findAll(): Promise<Blog[]> {
       return this.blogReponsitory.find({ order: { id: 'DESC' } });
    }

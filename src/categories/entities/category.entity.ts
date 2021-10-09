@@ -7,7 +7,10 @@ import {
    UpdateDateColumn,
    BeforeRemove,
    getConnection,
+   ManyToMany,
+   JoinTable,
 } from 'typeorm';
+import { Media } from '../../media/entities/media.entity';
 
 @Entity()
 export class Category extends BaseEntity {
@@ -19,6 +22,10 @@ export class Category extends BaseEntity {
 
    @CreateDateColumn()
    createDate: Date;
+
+   @ManyToMany(() => Media, { eager: true, cascade: true })
+   @JoinTable()
+   images: Media[] = null;
 
    @UpdateDateColumn()
    writeDate: Date;
