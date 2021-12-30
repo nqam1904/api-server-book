@@ -25,7 +25,6 @@ export class AuthController {
    @UsePipes(ValidationPipe)
    @Post('login')
    async login(@Body() loginDto: LoginDto, @IpAddress() ipAddress) {
-      //ipAddress chưa sử dụng đc để test lên production nó lấy đc ip ko vì trên localhost ko láy ipaddress đc
       return this.authService.login(loginDto);
    }
 
